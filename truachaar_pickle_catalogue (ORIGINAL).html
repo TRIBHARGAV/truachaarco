@@ -1,0 +1,666 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --spice: #8B1A1A;
+  --spice-light: #C0392B;
+  --gold: #C8860A;
+  --gold-light: #E8A020;
+  --cream: #FDF6EC;
+  --leaf: #2D5A1B;
+  --leaf-light: #4A7C28;
+  --text-dark: #1E0F00;
+  --text-mid: #5C3A1E;
+}
+
+body { font-family: 'Lato', sans-serif; background: transparent; }
+
+.catalogue {
+  background: var(--cream);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #D4B896;
+  max-width: 680px;
+}
+
+.hero {
+  background: linear-gradient(135deg, #1A0A00 0%, #3D1500 40%,#6B2000 70%,#8B3A00 100%);
+  padding: 36px 32px 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40px; left: -40px; right: -40px; bottom: -40px;
+  background-image: radial-gradient(circle at 20% 20%, rgba(200,134,10,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(139,26,26,0.2) 0%, transparent 50%);
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(200,134,10,0.2);
+  border: 1px solid rgba(200,134,10,0.5);
+  color: #E8C060;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  position: relative;
+}
+
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 4px;
+  position: relative;
+}
+
+.brand-tru { color: #172e0d; }
+.brand-achaar { color: #4b0404; }
+.brand-co {
+  font-size: 32px;
+  color: #1a230e(255,255,255,0.6);
+  font-weight: 700;
+  vertical-align:sub;
+}
+.brand-pickles {
+  display: block;
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  color: #C8860A;
+  margin-top: 6px;
+  font-weight: 700;
+  position: relative;
+}
+
+.tagline {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: rgba(255,255,255,0.55);
+  font-size: 14px;
+  margin-top: 14px;
+  position: relative;
+}
+
+.divider-gold {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #C8860A, transparent);
+  margin: 12px auto;
+}
+
+.badges-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.badge-pill {
+  background: rgba(255,255,255,0.08);
+  border: 0.5px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.8);
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.products-section {
+  padding: 28px 24px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--spice);
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.product-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.product-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #E8D5BC;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(139,26,26,0.12); }
+.product-card.active { border-color: var(--spice); border-width: 2px; }
+
+.card-header {
+  padding: 14px 14px 10px;
+  text-align: center;
+}
+
+.card-emoji {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--spice);
+  line-height: 1.2;
+}
+
+.card-type {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.card-starting {
+  background: var(--spice);
+  color: white;
+  text-align: center;
+  padding: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.card-starting span {
+  font-size: 15px;
+}
+
+.price-detail {
+  display: none;
+  background: #FDF6EC;
+  border-top: 1px solid #E8D5BC;
+}
+
+.price-detail.open { display: block; }
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  border-bottom: 0.5px solid #EEE0CC;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.price-row:last-child { border-bottom: none; }
+.price-row:hover { background: #FFF0E0; }
+.price-row.selected { background: #FCE8D0; }
+
+.size-label {
+  font-size: 12px;
+  color: var(--text-mid);
+  font-weight: 700;
+}
+
+.price-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--spice);
+}
+
+.price-note {
+  font-size: 10px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.order-section {
+  background: white;
+  margin: 0 24px 24px;
+  border-radius: 12px;
+  border: 1px solid #E8D5BC;
+  padding: 20px;
+}
+
+.order-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: var(--spice);
+  margin-bottom: 14px;
+  font-weight: 700;
+}
+
+.order-summary {
+  min-height: 50px;
+  background: #FDF6EC;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  border: 1px dashed #D4B896;
+}
+
+.order-empty {
+  color: #A08060;
+  font-size: 13px;
+  font-style: italic;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 3px 0;
+  color: var(--text-dark);
+}
+
+.order-item strong { color: var(--spice); }
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 15px;
+  border-top: 1px solid #D4B896;
+  padding-top: 8px;
+  margin-top: 6px;
+  color: var(--spice);
+}
+
+.btn-clear {
+  background: none;
+  border: 1px solid #D4B896;
+  color: var(--text-mid);
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  transition: background 0.15s;
+  margin-right: 8px;
+}
+
+.btn-clear:hover { background: #F0E8DC; }
+
+.btn-order {
+  background: var(--spice);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  transition: background 0.15s;
+  flex: 1;
+}
+
+.btn-order:hover { background: var(--spice-light); }
+
+.btn-row { display: flex; align-items: center; gap: 8px; }
+
+.contact-bar {
+  background: var(--leaf);
+  padding: 18px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.contact-item {
+  text-align: center;
+  color: white;
+}
+
+.contact-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.contact-value {
+  font-size: 11px;
+  font-weight: 700;
+  color: #A8E080;
+}
+
+.contact-link {
+  font-size: 11px;
+  font-weight: 700;
+  color: #A8E080;
+  text-decoration: none;
+}
+
+.footer-strip {
+  background: #1E0F00;
+  padding: 10px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-text {
+  font-size: 10px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 1px;
+}
+
+.instagram-handle {
+  font-size: 11px;
+  color: #E8C060;
+  font-weight: 700;
+}
+
+.qty-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.qty-btn {
+  width: 22px; height: 22px;
+  background: var(--spice);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.qty-num {
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+  color: var(--spice);
+}
+</style>
+
+<h2 class="sr-only">TruAchaar Co. Pickles — Interactive Product Catalogue with Pricing</h2>
+
+<div class="catalogue">
+  <div class="hero">
+    <div class="hero-badge">Real Ingredients · Real Taste</div>
+    <div class="brand-name">
+      <span class="brand-tru">Tru</span><span class="brand-achaar">Achaar</span><span class="brand-co"> Co.</span>
+    </div>
+    <span class="brand-pickles">· Pickles ·</span>
+    <div class="divider-gold"></div>
+    <div class="tagline">Burst of Real Flavours — Traditional Recipes, Authentic Taste</div>
+    <div class="badges-row">
+      <span class="badge-pill">100% Homemade</span>
+      <span class="badge-pill">Premium Quality</span>
+      <span class="badge-pill">No Preservatives</span>
+      <span class="badge-pill">Pan India Delivery</span>
+    </div>
+  </div>
+
+  <div class="products-section">
+    <div class="section-title">Our Signature Pickles</div>
+    <div class="product-cards" id="productCards">
+
+      <div class="product-card" id="card-chicken">
+        <div class="card-header" onclick="toggleCard('chicken')">
+          <img src ="Chicken.png" alt="Chicken" style="width:100%;height: 120px;;margin-bottom:0px;">
+          <div class="card-name">Chicken</div>
+          <div class="card-type">Pickle</div>
+        </div>
+        <div class="card-starting" onclick="toggleCard('chicken')">
+          Starting at <span>₹119</span>
+        </div>
+        <div class="price-detail" id="detail-chicken">
+          <div class="price-row" onclick="addToOrder('Chicken Pickle','100g',119)">
+            <span class="size-label">100g</span>
+            <div style="text-align:right">
+              <div class="price-amount">₹119</div>
+            </div>
+          </div>
+          <div class="price-row" onclick="addToOrder('Chicken Pickle','250g',279)">
+            <span class="size-label">250g</span>
+            <div style="text-align:right">
+              <div class="price-amount">₹279</div>
+            </div>
+          </div>
+          <div class="price-row" onclick="addToOrder('Chicken Pickle','500g',549)">
+            <span class="size-label">500g</span>
+            <div style="text-align:right">
+              <div class="price-amount">₹549</div>
+            </div>
+          </div>
+          <div class="price-row" onclick="addToOrder('Chicken Pickle','1kg',849)">
+            <span class="size-label">1 kg</span>
+            <div style="text-align:right">
+              <div class="price-amount">₹849</div>
+              <div class="price-note">Best Value</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" id="card-mutton">
+        <div class="card-header" onclick="toggleCard('mutton')">
+          <img src ="Mutton.png" alt="Mutton" style="width:100%;height: 120px;;margin-bottom:0px;">
+          <div class="card-name">Mutton</div>
+          <div class="card-type">Pickle</div>
+        </div>
+        <div class="card-starting" onclick="toggleCard('mutton')">
+          Starting at <span>₹549</span>
+        </div>
+        <div class="price-detail" id="detail-mutton">
+          <div class="price-row" onclick="addToOrder('Mutton Pickle','250g',549)">
+            <span class="size-label">250g</span>
+            <div style="text-align:right">
+              <div class="price-amount">₹549</div>
+            </div>
+          </div>
+          <div class="price-row" onclick="addToOrder('Mutton Pickle','500g',1049)">
+            <span class="size-label">500g</span>
+            <div style="text-align:right">
+              <div class="price-amount">₹1,049</div>
+            </div>
+          </div>
+          <div class="price-row" onclick="addToOrder('Mutton Pickle','1kg',1799)">
+            <span class="size-label">1 kg</span>
+            <div style="text-align:right">
+              <div class="price-amount">₹1,799</div>
+              <div class="price-note">Best Value</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" id="card-prawns">
+        <div class="card-header" onclick="toggleCard('prawns')">
+          <img src ="Prawns.png" alt="Prawns" style="width:100%;height: 120px;;margin-bottom:0px;">
+          <div class="card-name">Prawns</div>
+          <div class="card-type">Pickle</div>
+        </div>
+        <div class="card-starting" onclick="toggleCard('prawns')">
+          Starting at <span>₹399</span>
+        </div>
+        <div class="price-detail" id="detail-prawns">
+          <div class="price-row" onclick="addToOrder('Prawns Pickle','250g',399)">
+            <span class="size-label">250g</span>
+            <div style="text-align:right">
+              <div class="price-amount">₹399</div>
+            </div>
+          </div>
+          <div class="price-row" onclick="addToOrder('Prawns Pickle','500g',749)">
+            <span class="size-label">500g</span>
+            <div style="text-align:right">
+              <div class="price-amount">₹749</div>
+            </div>
+          </div>
+          <div class="price-row" onclick="addToOrder('Prawns Pickle','1kg',1349)">
+            <span class="size-label">1 kg</span>
+            <div style="text-align:right">
+              <div class="price-amount">₹1,349</div>
+              <div class="price-note">Best Value</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <p style="text-align:center;font-size:11px;color:#A08060;margin-top:12px;font-style:italic;">Tap a product to view sizes · Tap a size to add to your order</p>
+  </div>
+
+  <div class="order-section">
+    <div class="order-title">Your Order</div>
+    <div class="order-summary" id="orderSummary">
+      <div class="order-empty" id="emptyMsg">Select products above to build your order</div>
+      <div id="orderItems"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-clear" onclick="clearOrder()">Clear</button>
+      <button class="btn-order" onclick="placeOrder()">Order on WhatsApp ↗</button>
+    </div>
+  </div>
+
+  <div class="contact-bar">
+    <div class="contact-item">
+      <div class="contact-label">Call / WhatsApp</div>
+      <a class="contact-link" href="tel:+917842992926">+91 78429 92926</a>
+    </div>
+    <div class="contact-item">
+      <div class="contact-label">Email</div>
+      <a class="contact-link" href="mailto:truachaarco@gmail.com">truachaarco@gmail.com</a>
+    </div>
+    <div class="contact-item">
+      <div class="contact-label">Location</div>
+      <div class="contact-value">Chiiakaluripeta</div>
+    </div>
+  </div>
+
+  <div class="footer-strip">
+    <div class="footer-text">PAN INDIA DELIVERY · NO ARTIFICIAL PRESERVATIVES</div>
+    <div class="instagram-handle">@TRUACHAARCO</div>
+  </div>
+</div>
+
+<script>
+var orders = {};
+
+function toggleCard(id) {
+  var detail = document.getElementById('detail-' + id);
+  var card = document.getElementById('card-' + id);
+  var isOpen = detail.classList.contains('open');
+  ['chicken','mutton','prawns'].forEach(function(p) {
+    document.getElementById('detail-' + p).classList.remove('open');
+    document.getElementById('card-' + p).classList.remove('active');
+  });
+  if (!isOpen) {
+    detail.classList.add('open');
+    card.classList.add('active');
+  }
+}
+
+function addToOrder(product, size, price) {
+  var key = product + ' (' + size + ')';
+  if (!orders[key]) orders[key] = { price: price, qty: 1 };
+  else orders[key].qty += 1;
+  renderOrder();
+}
+
+function removeItem(key) {
+  delete orders[key];
+  renderOrder();
+}
+
+function changeQty(key, delta) {
+  if (!orders[key]) return;
+  orders[key].qty += delta;
+  if (orders[key].qty <= 0) delete orders[key];
+  renderOrder();
+}
+
+function renderOrder() {
+  var items = Object.keys(orders);
+  var el = document.getElementById('orderItems');
+  var empty = document.getElementById('emptyMsg');
+  if (items.length === 0) {
+    empty.style.display = 'block';
+    el.innerHTML = '';
+    return;
+  }
+  empty.style.display = 'none';
+  var total = 0;
+  var html = '';
+  items.forEach(function(key) {
+    var o = orders[key];
+    var sub = o.price * o.qty;
+    total += sub;
+    html += '<div class="order-item">' +
+      '<span><strong>' + key + '</strong></span>' +
+      '<span style="display:flex;align-items:center;gap:8px;">' +
+      '<span class="qty-ctrl">' +
+      '<button class="qty-btn" onclick="changeQty(\'' + key + '\',-1)">−</button>' +
+      '<span class="qty-num">' + o.qty + '</span>' +
+      '<button class="qty-btn" onclick="changeQty(\'' + key + '\',1)">+</button>' +
+      '</span>' +
+      '<span style="min-width:64px;text-align:right;font-weight:700;color:#8B1A1A">₹' + sub.toLocaleString('en-IN') + '</span>' +
+      '</span>' +
+      '</div>';
+  });
+  html += '<div class="order-total"><span>Total</span><span>₹' + total.toLocaleString('en-IN') + '</span></div>';
+  el.innerHTML = html;
+}
+
+function clearOrder() {
+  orders = {};
+  renderOrder();
+}
+
+function placeOrder() {
+  var items = Object.keys(orders);
+  if (items.length === 0) { alert('Please select at least one item!'); return; }
+  var msg = 'Hello TruAchaar Co.! I would like to place an order:\n\n';
+  var total = 0;
+  items.forEach(function(key) {
+    var o = orders[key];
+    var sub = o.price * o.qty;
+    total += sub;
+    msg += '• ' + key + ' x' + o.qty + ' = ₹' + sub.toLocaleString('en-IN') + '\n';
+  });
+  msg += '\nTotal: ₹' + total.toLocaleString('en-IN');
+  msg += '\n\nPlease confirm availability and delivery details. Thank you!';
+  var encoded = encodeURIComponent(msg);
+  window.open('https://wa.me/917842992926?text=' + encoded, '_blank');
+}
+</script>
